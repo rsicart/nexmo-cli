@@ -17,10 +17,14 @@
         "symfony/yaml": "~2.4",
         "guzzle/guzzle": "~3.7"
     },
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Onema\\NexmoCli\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
         }
     }
 }

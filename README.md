@@ -47,23 +47,23 @@ $application->run();
 ### Send SMS
 From the command line type the following command
 ```shell
-nexmo:sms [text] [phone] 
+php app/console nexmo:sms [text] [phone] 
 ```
 
 Example 
 ```shell
-nexmo:sms 'Hello World' 1234567890
+php app/console nexmo:sms 'Hello World' 1234567890
 ```
 
 ### Send TTS
 From the command line type the following command
 ```shell
-nexmo:tts [text] [phone] 
+php app/console nexmo:tts [text] [phone] 
 ```
 
 Example 
 ```shell
-nexmo:tts 'Hello World' 1234567890
+php app/console nexmo:tts 'Hello World' 1234567890
 ```
 
 

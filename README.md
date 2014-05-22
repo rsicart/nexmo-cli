@@ -24,7 +24,7 @@ parameters:
 
 ## Use 
 
-Create a `console` file in the location of your choise. I will create it in the app directory
+Create a `console` file in the location of your choice. I will create it in the app directory
 ```php
 #!/usr/bin/env php
 <?php
@@ -50,7 +50,7 @@ From the command line type the following command
 nexmo:sms [text] [phone] 
 ```
 
-Examaple 
+Example 
 ```shell
 nexmo:sms 'Hello World' 1234567890
 ```
@@ -61,7 +61,7 @@ From the command line type the following command
 nexmo:tts [text] [phone] 
 ```
 
-Examaple 
+Example 
 ```shell
 nexmo:tts 'Hello World' 1234567890
 ```

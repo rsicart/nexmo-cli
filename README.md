@@ -7,7 +7,7 @@ Send SMS and Voice messages from the command line using the Nexmo API
 ## Installation 
 
 ```shell
-php composer.phar require onema/nexmo-cli:dev-master
+php composer.phar require onema/nexmo-cli:1.0.*@dev
 ```
 
 ## Configuration 

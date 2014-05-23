@@ -7,7 +7,7 @@
  */
 namespace Onema\NexmoCli\Command;
 
-use Guzzle\Http\Client;
+use GuzzleHttp\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Yaml\Yaml;
@@ -38,9 +38,25 @@ class BaseCommand extends Command
         ;
     }
 
+    /**
+     * @return \GuzzleHttp\Client
+     */
     protected function getClient()
     {
-        $client = new Client('https://rest.nexmo.com');
+        $config = $this->getConfiguration();
+
+        $client = new Client([
+            'base_url' => 'https://rest.nexmo.com',
+            'defaults' => [
+                'body' => [
+                    'api_key' => $config['api_key'],
+                    'api_secret' => $config['api_secret'],
+                    'from' => $config['account_from_number'],
+                ]
+            ]
+        ]);
+
+        $client->setDefaultOption('body/api_key', $config['api_key']);
 
         return $client;
     }

@@ -34,17 +34,17 @@ class TtsCommand  extends BaseCommand
     {
         $text = $input->getArgument('text');
         $phone = $input->getArgument('phone');
+
         $client = $this->getClient();
-        $config = $this->getConfiguration();
-        $request = $client->post('tts/json', null, array(
-            'api_key' => $config['api_key'],
-            'api_secret' => $config['api_secret'],
-            'to' => $phone,
-            'text' => $text,
-        ));
 
         try {
-            $data = $request->send()->json();
+            $response = $client->post('sms/json', [
+                'body' => [
+                    'to' => $phone,
+                    'text' => $text,
+                ]
+            ]);
+            $data = $response->json();
             $output->writeln('<info>Just TTS the following message: '.$text.'</info>');
             $output->writeln('<info>API response: '.print_r($data, true).'</info>');
         } catch (ClientErrorResponseException $e) {

@@ -34,20 +34,17 @@ class SmsCommand extends BaseCommand
     {
         $text = $input->getArgument('text');
         $phone = $input->getArgument('phone');
-        $client = $this->getClient();
-        $config = $this->getConfiguration();
-        $request = $client->post('sms/json', null, array(
-            'api_key' => $config['api_key'],
-            'api_secret' => $config['api_secret'],
-            'from' => $config['account_from_number'],
-            'to' => $phone,
-            'text' => $text,
-        ));
 
-        $request->addHeader('Content-Type', 'application/x-www-form-urlencoded');
+        $client = $this->getClient();
 
         try {
-            $data = $request->send()->json();
+            $response = $client->post('sms/json', [
+                'body' => [
+                    'to' => $phone,
+                    'text' => $text,
+                ]
+            ]);
+            $data = $response->json();
             $output->writeln('<info>Just sent and SMS with the following message: '.$text.'</info>');
             $output->writeln('<info>API response: '.print_r($data, true).'</info>');
         } catch (ClientErrorResponseException $e) {

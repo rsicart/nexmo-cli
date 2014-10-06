@@ -9,7 +9,10 @@ namespace Onema\NexmoCli\Command;
 
 use GuzzleHttp\Client;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -21,6 +24,10 @@ use Symfony\Component\Yaml\Yaml;
 
 class BaseCommand extends Command
 {
+    protected $config;
+    protected $client;
+    protected $text;
+    protected $phone;
 
     protected function configure()
     {
@@ -34,6 +41,12 @@ class BaseCommand extends Command
                 'phone',
                 InputArgument::REQUIRED,
                 'To phone number'
+            )
+            ->addOption(
+                'config-file',
+                'c',
+                InputArgument::OPTIONAL,
+                'Yaml custom config file'
             )
         ;
     }
@@ -63,9 +76,19 @@ class BaseCommand extends Command
 
     protected function getConfiguration()
     {
-        $path = __DIR__.'/../../../../app/config/parameters.yml';
+        $path = $this->config ?: __DIR__ . '/../../../../app/config/parameters.yml';
+        if (!file_exists($path))
+            throw new \Exception('Unable to find config file ' . $path);
         $configValues = Yaml::parse($path);
         return $configValues['parameters']['nexmo'];
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $this->text = $input->getArgument('text');
+        $this->phone = $input->getArgument('phone');
+        $this->config = $input->getOption('config-file');
+        $this->client = $this->getClient();
     }
 
 }

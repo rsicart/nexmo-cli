@@ -38,7 +38,7 @@ class TtsCommand  extends BaseCommand
         $client = $this->getClient();
 
         try {
-            $response = $client->post('sms/json', [
+            $response = $client->post('tts/json', [
                 'body' => [
                     'to' => $phone,
                     'text' => $text,

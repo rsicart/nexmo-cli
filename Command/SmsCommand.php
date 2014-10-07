@@ -32,20 +32,17 @@ class SmsCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $text = $input->getArgument('text');
-        $phone = $input->getArgument('phone');
-
-        $client = $this->getClient();
+        parent::execute($input, $output);
 
         try {
-            $response = $client->post('sms/json', [
+            $response = $this->client->post('sms/json', [
                 'body' => [
-                    'to' => $phone,
-                    'text' => $text,
+                    'to' => $this->phone,
+                    'text' => $this->text,
                 ]
             ]);
             $data = $response->json();
-            $output->writeln('<info>Just sent and SMS with the following message: '.$text.'</info>');
+            $output->writeln('<info>Just sent and SMS with the following message: ' . $this->text . '</info>');
             $output->writeln('<info>API response: '.print_r($data, true).'</info>');
         } catch (ClientErrorResponseException $e) {
             $output->writeln('<error>ERROR: '.$e->getMessage().'</error>');
